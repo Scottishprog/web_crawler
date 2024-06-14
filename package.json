@@ -1,0 +1,11 @@
+{
+  "name": "web_crawler",
+  "version": "1.0.0",
+  "description": "Web Crawler Project for Boot.Dev",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Mark Wanamaker",
+  "license": "ISC"
+}
