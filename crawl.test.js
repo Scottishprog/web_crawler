@@ -1,6 +1,5 @@
-//import {test, expect} from "@jest/globals"
-//import {normalizeURL} from "./crawl";
-const normalizeURL = require('./crawl')
+import {test, expect} from "@jest/globals"
+import {normalizeURL} from "./crawl.js";
 
 const test_string = "http://AtestURL.com"
 
