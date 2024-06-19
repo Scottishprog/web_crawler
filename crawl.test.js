@@ -12,5 +12,9 @@ test('Any Result at All', ()=> {
 })
 
 test('test_string normalized', ()=> {
-    expect(normalizeURL(test_string)).not.toBe(test_string_r)
+    expect(normalizeURL(test_string)).toBe(test_string_r)
+})
+
+test('test_string_2 normalized', ()=> {
+    expect(normalizeURL(test_string_2)).toBe(test_string_r)
 })
