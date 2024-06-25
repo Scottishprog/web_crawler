@@ -17,6 +17,7 @@ function stripTrailingSlash(input) {
 function getURLSFromHTML(htmlBody, baseURL) {
     //const dom = new JSDOM(htmlBody);
     //return dom.window.document.querySelectorAll("a")
+    return ""
 }
 
-export function getURLsFromURL(htmlBody, baseURL) {}
+export function getURLsFromHTML(htmlBody, baseURL) {}

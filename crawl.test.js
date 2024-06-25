@@ -1,5 +1,5 @@
 import {test, expect} from "@jest/globals"
-import {normalizeURL, getURLsFromURL} from "./crawl.js"
+import {normalizeURL, getURLsFromHTML} from "./crawl.js"
 
 const test_string = "https://blog.boot.dev/path/"
 const test_string_r = "blog.boot.dev/path"
@@ -28,7 +28,7 @@ test('test_string_4 normalized', ()=> {
 })
 
 // Testing getURLsFromHTML
-const base_URL = '';
+const base_URL = 'https://blog.boot.dev';
 const html_1 =
     '<html>\n' +
     '    <body>\n' +
@@ -38,5 +38,5 @@ const html_1 =
 const html_1_r = 'https://blog.boot.dev';
 
 test('Basic URL from HTML', () => {
-    expect(getURLsFromURL(html_1, base_URL)).toBe(html_1_r)
+    expect(getURLsFromHTML(html_1, base_URL)).toBe(html_1_r)
 })
