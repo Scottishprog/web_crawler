@@ -40,7 +40,12 @@ const html_1_r = 'https://blog.boot.dev/';
 
 test('Basic URL from HTML', () => {
     const result = getURLsFromHTML(html_1, base_URL);
-    console.log("Result: " + result[0].item(0).href);
-    const text = result[0].item(0).href
+    console.log("Result: " + result[0]);
+    const text = result[0];
     expect(text).toBe(html_1_r);
+})
+
+test('Proper Link Count', ()=> {
+    const result = getURLsFromHTML(html_1, base_URL);
+    expect(result.length).toBe(2);
 })
