@@ -21,7 +21,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
         if (result[i].href.includes(baseURL)){
             resultArray.push(result[i].href);
         }else {
-            resultArray.push(baseURL + [i].href);
+            resultArray.push(baseURL + result[i].href);
         }
     }
     return resultArray;

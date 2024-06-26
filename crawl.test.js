@@ -42,7 +42,6 @@ const html_1_r = 'https://blog.boot.dev/';
 
 test('Basic URL from HTML', () => {
     const result = getURLsFromHTML(html_1, base_URL);
-    console.log("Result: " + result[0]);
     const text = result[0];
     expect(text).toBe(html_1_r);
 })
