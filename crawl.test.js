@@ -34,6 +34,8 @@ const html_1 =
     '   <body>'+
     '       <a href="https://blog.boot.dev"><span>Go to Boot.dev</span></a>'+
     '       <a href="https://blog.boot.dev"><span>Go to Boot.dev</span></a>'+
+    '       <a href="https://blog.boot.dev/some/random/path"><span>Go to Boot.dev</span></a>'+
+    '       <a href="/another/random/path"><span>Go to Boot.dev</span></a>'+
     '   </body>'+
     '</html>';
 const html_1_r = 'https://blog.boot.dev/';
@@ -47,5 +49,12 @@ test('Basic URL from HTML', () => {
 
 test('Proper Link Count', ()=> {
     const result = getURLsFromHTML(html_1, base_URL);
-    expect(result.length).toBe(2);
+    expect(result.length).toBe(4);
+})
+
+test('Relative Paths are coverted to Absolute path', () => {
+    const result = getURLsFromHTML(html_1, base_URL);
+    for (let i=0; i<result.length; i++) {
+        expect(result[i]).toContain(base_URL);
+    }
 })

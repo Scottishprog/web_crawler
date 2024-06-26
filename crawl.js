@@ -15,8 +15,16 @@ function stripTrailingSlash(input) {
 
 function getURLsFromHTML(htmlBody, baseURL) {
     const dom = new JSDOM(htmlBody);
-    const result = new Array(dom.window.document.querySelectorAll("a"))
-    return Array(result[0].item(0).href)
+    const result = dom.window.document.querySelectorAll("a");
+    let resultArray = Array();
+    for (let i=0; i < result.length; i++){
+        if (result[i].href.includes(baseURL)){
+            resultArray.push(result[i].href);
+        }else {
+            resultArray.push(baseURL + [i].href);
+        }
+    }
+    return resultArray;
 }
 
 export { getURLsFromHTML }
