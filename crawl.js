@@ -16,13 +16,19 @@ function stripTrailingSlash(input) {
 function getURLsFromHTML(htmlBody, baseURL) {
     const dom = new JSDOM(htmlBody);
     const result = dom.window.document.querySelectorAll("a");
-    let resultArray = Array();
-    for (let i=0; i < result.length; i++){
-        if (result[i].href.includes(baseURL)){
-            resultArray.push(result[i].href);
-        }else {
-            resultArray.push(baseURL + result[i].href);
+    let resultArray = [];
+    for (const anchor of result){
+        if (anchor.hasAttribute('href')) {
+                    let href = anchor.getAttribute("href");
+            try {
+                //convert relative URLs to absolute URLs
+                href = new URL(href, baseURL).href;
+                resultArray.push(href);
+            } catch (err){
+                console.log(`${err.message}: ${href}`)
+            }
         }
+
     }
     return resultArray;
 }
