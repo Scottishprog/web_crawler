@@ -34,3 +34,28 @@ function getURLsFromHTML(htmlBody, baseURL) {
 }
 
 export { getURLsFromHTML }
+
+async function crawlPage(currentURL){
+
+    console.log(`Crawling: ${currentURL}`);
+    let response
+    try{
+        response = await fetch(currentURL);
+    } catch(err){
+        throw new Error('Got network error: ${err.message}');
+    }
+
+    if(response.status > 399){
+        console.log(`HTTP Error: ${response.status}${response.statusText}`);
+        return;
+    }
+
+    const contentType = response.headers.get('content-type');
+    if(!contentType || !contentType.includes('text/html')) {
+        console.log(`Non-HTML response: ${contentType}`)
+        return;
+    }
+    console.log(await response.text());
+}
+
+export {crawlPage};
