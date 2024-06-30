@@ -35,10 +35,31 @@ function getURLsFromHTML(htmlBody, baseURL) {
 
 export { getURLsFromHTML }
 
-async function crawlPage(currentURL){
-
+function crawlPage(baseURL, currentURL=baseURL, pages = {} ){
     console.log(`Crawling: ${currentURL}`);
-    let response
+    //make sure it's the same domain...
+    if(!currentURL.contains(baseURL)){
+        return pages;
+    }
+
+    let NormalizedCurrentURL = normalizeURL(currentURL);
+
+
+    let newURLs = getURLsFromHTML(currentURL);
+
+    if (newURLs.length === 0){
+        return pages;
+    }
+
+    //recursively call crawlPage with URL list
+
+    return pages;
+}
+
+export {crawlPage};
+
+async function getURLsFromURL(currentURL){
+        let response
     try{
         response = await fetch(currentURL);
     } catch(err){
@@ -55,7 +76,7 @@ async function crawlPage(currentURL){
         console.log(`Non-HTML response: ${contentType}`)
         return;
     }
-    console.log(await response.text());
-}
+    const HTMLText =  await response.text();
+    return getURLsFromHTML(HTMLText);
 
-export {crawlPage};
+}
