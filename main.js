@@ -1,7 +1,7 @@
 import {argv} from 'node:process'
 import {crawlPage} from './crawl.js'
 
-function main(){
+async function main(){
     if(process.argv.length < 3){
         console.error('Usage: npm run start BASE_URL - One argument is required.')
         process.exit(1)
@@ -14,7 +14,7 @@ function main(){
 
     const baseURL = argv[2];
 
-    console.log(crawlPage(baseURL));
+    console.log(await crawlPage(baseURL));
     console.log("Hello World")
 }
 

@@ -38,40 +38,46 @@ export { getURLsFromHTML }
 async function crawlPage(baseURL, currentURL=baseURL, pages = {} ){
     console.log(`Crawling: ${currentURL}`);
     //make sure it's the same domain...
-    if(!currentURL.includes(baseURL)){
-        console.log(`Current URL in base domain!: ${currentURL}`);
+    const testURL = new URL(currentURL);
+    if(testURL.hostname !== new URL(baseURL).hostname){
+        console.log(`Returning: Current URL not in base domain!: ${currentURL}`);
         return pages;
     }
 
     let normalizedCurrentURL = normalizeURL(currentURL);
     if(normalizedCurrentURL in pages){
         pages[normalizedCurrentURL] ++;
+        console.log(`Returning: Link already visited: ${currentURL}}`)
+        return pages;
     }else {
         pages[normalizedCurrentURL] = 1;
     }
 
     let newURLs = await getURLsFromURL(currentURL, baseURL);
-    console.log(newURLs);
-    if (newURLs.length === 0){
-        console.log('No new URLs found.');
+
+    if (!Array.isArray(newURLs) || newURLs.length === 0){
+        console.log(`Returning: No new URLs found at: ${currentURL}`);
         return pages;
     }
     //recursively call crawlPage with URL list
+
     for(const newURL of newURLs){
-
+    //console.log('CurrentURL: ' +currentURL + 'newURL: ' +newURL);
+        pages =  await crawlPage(baseURL, newURL, pages);
     }
-
+    //console.log(pages);
     return pages;
 }
 
 export {crawlPage};
 
 async function getURLsFromURL(currentURL, baseURL){
-        let response
+    let response
     try{
         response = await fetch(currentURL);
     } catch(err){
         throw new Error('Got network error: ${err.message}');
+
     }
 
     if(response.status > 399){
