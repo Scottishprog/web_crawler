@@ -14,7 +14,7 @@ function main(){
 
     const baseURL = argv[2];
 
-    crawlPage(baseURL);
+    console.log(crawlPage(baseURL));
     console.log("Hello World")
 }
 

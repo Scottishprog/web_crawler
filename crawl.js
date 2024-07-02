@@ -19,7 +19,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
     let resultArray = [];
     for (const anchor of result){
         if (anchor.hasAttribute('href')) {
-                    let href = anchor.getAttribute("href");
+            let href = anchor.getAttribute("href");
             try {
                 //convert relative URLs to absolute URLs
                 href = new URL(href, baseURL).href;
@@ -35,30 +35,38 @@ function getURLsFromHTML(htmlBody, baseURL) {
 
 export { getURLsFromHTML }
 
-function crawlPage(baseURL, currentURL=baseURL, pages = {} ){
+async function crawlPage(baseURL, currentURL=baseURL, pages = {} ){
     console.log(`Crawling: ${currentURL}`);
     //make sure it's the same domain...
-    if(!currentURL.contains(baseURL)){
+    if(!currentURL.includes(baseURL)){
+        console.log(`Current URL in base domain!: ${currentURL}`);
         return pages;
     }
 
-    let NormalizedCurrentURL = normalizeURL(currentURL);
+    let normalizedCurrentURL = normalizeURL(currentURL);
+    if(normalizedCurrentURL in pages){
+        pages[normalizedCurrentURL] ++;
+    }else {
+        pages[normalizedCurrentURL] = 1;
+    }
 
-
-    let newURLs = getURLsFromHTML(currentURL);
-
+    let newURLs = await getURLsFromURL(currentURL, baseURL);
+    console.log(newURLs);
     if (newURLs.length === 0){
+        console.log('No new URLs found.');
         return pages;
     }
-
     //recursively call crawlPage with URL list
+    for(const newURL of newURLs){
+
+    }
 
     return pages;
 }
 
 export {crawlPage};
 
-async function getURLsFromURL(currentURL){
+async function getURLsFromURL(currentURL, baseURL){
         let response
     try{
         response = await fetch(currentURL);
@@ -77,6 +85,6 @@ async function getURLsFromURL(currentURL){
         return;
     }
     const HTMLText =  await response.text();
-    return getURLsFromHTML(HTMLText);
+    return getURLsFromHTML(HTMLText, baseURL);
 
 }
