@@ -16,7 +16,6 @@ async function main(){
     const baseURL = argv[2];
 
     const results = await crawlPage(baseURL);
-    console.log(results);
     printReport(results);
 
 }
